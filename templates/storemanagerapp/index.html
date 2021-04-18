@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Manager App</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'storemanagerapp/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'storemanagerapp/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'storemanagerapp/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">  
+    <link rel="stylesheet" href="{% static 'storemanagerapp/plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'storemanagerapp/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'storemanagerapp/css/adminlte.min.css' %}">
+
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+    {% block main-navbar %}
+    
+        {% include 'storemanagerapp/inc/main_navbar.html' %}
+    
+    {% endblock main-navbar %}
+
+    {% block side-navbar %}
+    
+        {% include 'storemanagerapp/inc/side_navbar.html' %}
+
+    {% endblock side-navbar %}
+    {% block content %}
+    
+    {% endblock content %}
+    </div>
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="{% static 'storemanagerapp/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'storemanagerapp/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'storemanagerapp/plugins/select2/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'storemanagerapp/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'storemanagerapp/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'storemanagerapp/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'storemanagerapp/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'storemanagerapp/js/adminlte.min.js' %}"></script>
+
+    <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  })
+</script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>

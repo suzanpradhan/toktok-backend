@@ -1,0 +1,108 @@
+{% extends 'storemanagerapp/index.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Add new Item</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Add New Item</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="foodName1">Food Name</label>
+                    <input type="email" class="form-control is-invalid" id="foodName1" placeholder="eg. Spicy Burger">
+                  </div>
+
+                    <div class="form-group">
+                    <label>Add To Menu</label>
+                    <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Menu 1</option>
+                        <option>Menu 2</option>
+                        <option>Menu 3</option>
+                        <option>Menu 4</option>
+                        <option>Menu 5</option>
+                        <option>Menu 6</option>
+                        <option>Menu 7</option>
+                    </select>
+                    </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputFile">Food Image</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label>Addons</label>
+                  <div class="select2-purple">
+                    <select class="select2" multiple="multiple" data-placeholder="Select Addons" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                      <option>Addon 1</option>
+                      <option>Addon 2</option>
+                      <option>Addon 3</option>
+                      <option>Addon 4</option>
+                      <option>Addon 5</option>
+                      <option>Addon 6</option>
+                      <option>Addon 7</option>
+                    </select>
+                  </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label>Variations</label>
+                  <div class="select2-purple">
+                    <select class="select2" multiple="multiple" data-placeholder="Select Variations" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                      <option>Variation 1</option>
+                      <option>Variation 2</option>
+                      <option>Variation 3</option>
+                      <option>Variation 4</option>
+                      <option>Variation 5</option>
+                      <option>Variation 6</option>
+                      <option>Variation 7</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+{% endblock content %}
+
