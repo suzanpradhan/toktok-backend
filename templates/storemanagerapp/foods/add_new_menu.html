@@ -27,21 +27,20 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form">
+              <form role="form" action="{% url 'store_manager_food_add_new_menu' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
                         <label for="menuName1">Menu Name</label>
-                        <input type="email" class="form-control is-invalid" id="menuName1" placeholder="eg. Spicy Burger">
+                        <input type="text" name="menu_name" class="form-control" id="menuName1" placeholder="eg. Spicy Burger" REQUIRED>
                     </div>
 
                     <div class="form-group">
                         <label>Add Items</label>
-                        <select multiple class="form-control">
-                            <option>Item 1</option>
-                            <option>Item 2</option>
-                            <option>Item 3</option>
-                            <option>Item 4</option>
-                            <option>Item 5</option>
+                        <select multiple name="food_items" class="form-control">
+                        {% for food_item in food_items %}
+                          <option>{{ food_item.name }}</option>
+                        {% endfor %}
                         </select>
                     </div>
                 </div>

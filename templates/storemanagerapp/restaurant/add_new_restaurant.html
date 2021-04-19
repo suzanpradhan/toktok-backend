@@ -1,0 +1,100 @@
+{% extends 'storemanagerapp/index.html' %} {% load static %} {% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Add new Branch</h1>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add New Branch</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" action="{% url 'store_manager_food_add_new_item' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="foodName1">Restaurant Name</label>
+                                    <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. Spicy Burger">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foodName1">Description</label>
+                                    <div class="card-body">
+                                        <textarea name="food_name" id="summernote">
+                                            Place some text here.
+                                        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Restaurant Cover Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="food_image" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row d-flex">
+                                    <div class="form-group flex-fill">
+                                        <label for="foodName1">Latitude</label>
+                                        <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. 438.245245">
+                                    </div>
+                                    <div class="space" style="width: 24px;"></div>
+                                    <div class="form-group flex-fill">
+                                        <label for="foodName1">Longitude</label>
+                                        <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. 27.43985425">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
+{% endblock content %} {% block scripts %}
+
+<script>
+    $(function() {
+        // Summernote
+        $('#summernote').summernote()
+
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    });
+</script>
+
+{% endblock scripts %}

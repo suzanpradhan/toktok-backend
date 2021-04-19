@@ -1,42 +1,45 @@
-{% extends 'storemanagerapp/index.html' %}
-
-{% load static %}
-
-{% block content %}
+{% extends 'storemanagerapp/index.html' %} {% load static %} {% block content %}
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Add new Item</h1>
-          </div>
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Add new Item</h1>
+                </div>
+            </div>
         </div>
-      </div><!-- /.container-fluid -->
+        <!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Add New Item</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form role="form">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="foodName1">Food Name</label>
-                    <input type="email" class="form-control is-invalid" id="foodName1" placeholder="eg. Spicy Burger">
-                  </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Add New Item</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" action="{% url 'store_manager_food_add_new_item' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="foodName1">Food Name</label>
+                                    <input type="text" class="form-control is-invalid" name="food_name" id="foodName1" placeholder="eg. Spicy Burger">
+                                </div>
 
-                    <div class="form-group">
-                    <label>Add To Menu</label>
-                    <select class="form-control select2" style="width: 100%;">
+                                <div class="form-group">
+                                    <label>Add To Menu</label>
+                                    <select class="form-control select2" id="add_food_menu_select2" name="food_menu" style="width: 100%;">
+                        {% comment %} {% if food_menus %}
+                          {% for food_menu in food_menus %}
+                            <option>{{ food_menu.name }}</option>
+                          {% endfor %}
+                        {% endif %} {% endcomment %}
                         <option selected="selected">Menu 1</option>
                         <option>Menu 2</option>
                         <option>Menu 3</option>
@@ -45,64 +48,77 @@
                         <option>Menu 6</option>
                         <option>Menu 7</option>
                     </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Food Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="food_image" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Addons</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" name="food_addons" value="" id="add_food_addon_select2" multiple="multiple" data-placeholder="Select Addons" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                      {% if food_addons %}
+                          {% for food_addon in food_addons %}
+                            <option>{{ food_addon.name }}</option>
+                          {% endfor %}
+                        {% endif %}
+                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Variations</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" name="food_variations" id="add_food_variations_select2" multiple="multiple" data-placeholder="Select Variations" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                      {% if food_variations %}
+                          {% for food_variation in food_variations %}
+                            <option>{{ food_variation.name }}</option>
+                          {% endfor %}
+                        {% endif %}
+                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
 
-                  <div class="form-group">
-                    <label for="exampleInputFile">Food Image</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                  <label>Addons</label>
-                  <div class="select2-purple">
-                    <select class="select2" multiple="multiple" data-placeholder="Select Addons" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                      <option>Addon 1</option>
-                      <option>Addon 2</option>
-                      <option>Addon 3</option>
-                      <option>Addon 4</option>
-                      <option>Addon 5</option>
-                      <option>Addon 6</option>
-                      <option>Addon 7</option>
-                    </select>
-                  </div>
-                  </div>
-
-                  <div class="form-group">
-                  <label>Variations</label>
-                  <div class="select2-purple">
-                    <select class="select2" multiple="multiple" data-placeholder="Select Variations" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                      <option>Variation 1</option>
-                      <option>Variation 2</option>
-                      <option>Variation 3</option>
-                      <option>Variation 4</option>
-                      <option>Variation 5</option>
-                      <option>Variation 6</option>
-                      <option>Variation 7</option>
-                    </select>
-                  </div>
-                  </div>
                 </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
             </div>
-
-          </div>
         </div>
-      </div><!-- /.container-fluid -->
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  </div>
+</div>
 
 
 
-{% endblock content %}
+{% endblock content %} {% block scripts %}
 
+<script>
+    $("#add_food_menu_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
+        var items = $(this).val(); //Gets the last selected item 
+        console.log(items);
+    });
+    $("#add_food_addon_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
+        var items = $(this).val(); //Gets the last selected item 
+        console.log(items);
+    });
+    $("#add_food_variations_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
+        var items = $(this).val(); //Gets the last selected item 
+        console.log(items);
+    });
+</script>
+
+{% endblock scripts %}
