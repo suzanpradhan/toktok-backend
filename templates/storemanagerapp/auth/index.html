@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+    {% block header-css %}
+    
+        {% include 'storemanagerapp/inc/header-css.html' %}
+    
+    {% endblock header-css %}
+</head>
+<body>
+{% block content %}{% endblock content %}
+    {% block main-scripts %}
+      {% include 'storemanagerapp/inc/scripts.html' %}
+    {% endblock main-scripts %}
+</body>
+</html>

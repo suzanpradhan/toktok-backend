@@ -1,15 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.http.response import HttpResponse
 from . import forms as store_manager_forms
 from django.contrib.auth import authenticate, login, logout
 from toktok.apps.restaurant import models as restaurant_models
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+# from django.contrib.auth.mixins import LoginRequiredMixin
+# from .mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class Dashboard(TemplateView):
+
+class Dashboard(LoginRequiredMixin, TemplateView):
+    # login_url = 'store_manager_login'
+    # redirect_field_name = 'redirect_to'
     template_name = "storemanagerapp/dashboard.html"
-    
+    login_url = "store_manager_login"
+    redirect_field_name = "hollaback"
+    # raise_exception = True
+    # @method_decorator(login_required(login_url='store_manager_login'))
+    # def dispatch(self, *args, **kwargs):
+    #     return super(ProtectedView, self).dispatch(*args, **kwargs)
+    # @method_decorator(unauthenticated_user)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(Dashboard, self).dispatch(*args, **kwargs)
+    # @login_required(login_url="store_manager_login")
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
 
 class StoreMangerLogin(TemplateView):
     template_name = "storemanagerapp/auth/login.html"
@@ -19,10 +38,12 @@ class StoreMangerLogin(TemplateView):
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get("email")
-        password = request.POST.get("password1")
+        password = request.POST.get("password")
         user = authenticate(request, email=email, password=password)
-        if user:
-            return HttpResponse("Success")
+        login(request, user)
+        print(request.user)
+        if user is not None:
+            return redirect('store_manager_dashboard')
         else:
             return HttpResponse("Failed")
 
@@ -118,6 +139,12 @@ class FoodAddNewVariation(TemplateView):
 
 class RestaurantAddNew(TemplateView):
     template_name = "storemanagerapp/restaurant/add_new_restaurant.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class RestaurantAll(TemplateView):
+    template_name = "storemanagerapp/restaurant/all_restaurant.html"
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)

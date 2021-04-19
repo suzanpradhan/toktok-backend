@@ -1,5 +1,8 @@
 from django.urls import path, include
 from . import views
+from django.contrib.auth.decorators import login_required, permission_required
+from .decorators import unauthenticated_user
+
 
 urlpatterns = [
     path('', views.Dashboard.as_view(), name='store_manager_dashboard'),
@@ -19,7 +22,8 @@ foodUrlPatterns = [
 ]
 
 restaurantUrlPatterns = [
-    path('restaurant/new', views.RestaurantAddNew.as_view(), name= "restaurant_add_new")
+    path('restaurant/new', views.RestaurantAddNew.as_view(), name= "restaurant_add_new"),
+    path('restaurant/', views.RestaurantAll.as_view(), name = "restaurant_all")
 ]
 
 urlpatterns += foodUrlPatterns
