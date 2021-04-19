@@ -1,0 +1,104 @@
+{% extends 'storemanagerapp/index.html' %} {% load static %} {% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>General Settings</h1>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">General Settings</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" action="{% url 'store_manager_food_add_new_item' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="full_name">Full Name</label>
+                                    <input type="text" class="form-control" name="full_name" placeholder="eg. Alex Brooker">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" name="description">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Cover Image</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="cover_image" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Favicon Icon</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="favicon_icon" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" name="description">
+                                </div>
+
+                                <div class="d-flex row">
+                                    <div class="form-group flex-fill">
+                                        <label for="latitude">Latitude</label>
+                                        <input type="text" class="form-control" name="description">
+                                    </div>
+                                    <div class="form-group flex-fill">
+                                        <label for="longitude">Longitude</label>
+                                        <input type="text" class="form-control" name="description">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
+{% endblock content %} 
+
+
+{% comment %} EXTRA SCRIPTS {% endcomment %}
+{% block scripts %}
+
+<script>
+
+</script>
+
+{% endblock scripts %}

@@ -13,7 +13,7 @@ class Restaurant(models.Model):
 class MenuCollection(models.Model):
     name = models.CharField(max_length=255)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-
+        
 class SubType(models.Model):
     name = models.CharField(max_length=255)
     

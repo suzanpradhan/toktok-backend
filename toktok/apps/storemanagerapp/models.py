@@ -12,7 +12,6 @@ class StoreManagerBasicDetial(models.Model):
     cover_image = models.ImageField()
     favicon = models.ImageField()
     location = models.ForeignKey(basicapp_models.Location, on_delete=models.CASCADE)
-    footer_text = models.CharField(max_length=255)
 
 
 class StoreManagerUser(AbstractUser):

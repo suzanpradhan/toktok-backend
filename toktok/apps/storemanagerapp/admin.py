@@ -26,3 +26,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(store_manager_models.StoreManagerUser, CustomUserAdmin)
+admin.site.register(store_manager_models.StoreManagerBasicDetial)

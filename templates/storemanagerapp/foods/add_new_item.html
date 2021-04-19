@@ -64,12 +64,12 @@
                                     <label>Addons</label>
                                     <div class="select2-purple">
                                         <select class="select2" name="food_addons" value="" id="add_food_addon_select2" multiple="multiple" data-placeholder="Select Addons" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                      {% if food_addons %}
-                          {% for food_addon in food_addons %}
-                            <option>{{ food_addon.name }}</option>
-                          {% endfor %}
-                        {% endif %}
-                    </select>
+                                    {% if food_addons %}
+                                        {% for food_addon in food_addons %}
+                                            <option>{{ food_addon.name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
                                     </div>
                                 </div>
 
@@ -77,12 +77,12 @@
                                     <label>Variations</label>
                                     <div class="select2-purple">
                                         <select class="select2" name="food_variations" id="add_food_variations_select2" multiple="multiple" data-placeholder="Select Variations" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                      {% if food_variations %}
-                          {% for food_variation in food_variations %}
-                            <option>{{ food_variation.name }}</option>
-                          {% endfor %}
-                        {% endif %}
-                    </select>
+                                    {% if food_variations %}
+                                        {% for food_variation in food_variations %}
+                                            <option>{{ food_variation.name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
                                     </div>
                                 </div>
                             </div>
@@ -104,21 +104,14 @@
 
 
 
-{% endblock content %} {% block scripts %}
+{% endblock content %} 
+
+
+{% comment %} EXTRA SCRIPTS {% endcomment %}
+{% block scripts %}
 
 <script>
-    $("#add_food_menu_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
-        var items = $(this).val(); //Gets the last selected item 
-        console.log(items);
-    });
-    $("#add_food_addon_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
-        var items = $(this).val(); //Gets the last selected item 
-        console.log(items);
-    });
-    $("#add_food_variations_select2").on("select2:select select2:unselect", function(e) { //this returns all the selected item 
-        var items = $(this).val(); //Gets the last selected item 
-        console.log(items);
-    });
+
 </script>
 
 {% endblock scripts %}
