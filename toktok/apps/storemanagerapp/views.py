@@ -99,7 +99,7 @@ class FoodAddNewMenu(TemplateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        return HttpResponse(request.POST)
+        return HttpResponse(request.POST.get("food_items"))
 
 class FoodAllAddons(TemplateView):
     template_name = 'storemanagerapp/foods/all_addons.html'
@@ -148,3 +148,7 @@ class RestaurantAll(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+def logoutStoreManagerUser(request):
+    logout(request)
+    return redirect('store_manager_dashboard')

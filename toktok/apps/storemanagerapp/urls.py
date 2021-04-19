@@ -7,6 +7,7 @@ from .decorators import unauthenticated_user
 urlpatterns = [
     path('', views.Dashboard.as_view(), name='store_manager_dashboard'),
     path('login/', views.StoreMangerLogin.as_view(), name='store_manager_login'),
+    path('logout/', views.logoutStoreManagerUser, name='store_manager_logout')
 ]
 
 

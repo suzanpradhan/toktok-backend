@@ -35,19 +35,19 @@
                                 <div class="form-group">
                                     <label>Add To Menu</label>
                                     <select class="form-control select2" id="add_food_menu_select2" name="food_menu" style="width: 100%;">
-                        {% comment %} {% if food_menus %}
-                          {% for food_menu in food_menus %}
-                            <option>{{ food_menu.name }}</option>
-                          {% endfor %}
-                        {% endif %} {% endcomment %}
-                        <option selected="selected">Menu 1</option>
-                        <option>Menu 2</option>
-                        <option>Menu 3</option>
-                        <option>Menu 4</option>
-                        <option>Menu 5</option>
-                        <option>Menu 6</option>
-                        <option>Menu 7</option>
-                    </select>
+                                        {% if food_menus %}
+                                        {% for food_menu in food_menus %}
+                                            <option>{{ food_menu.name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                        <option selected="selected">Menu 1</option>
+                                        <option>Menu 2</option>
+                                        <option>Menu 3</option>
+                                        <option>Menu 4</option>
+                                        <option>Menu 5</option>
+                                        <option>Menu 6</option>
+                                        <option>Menu 7</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
