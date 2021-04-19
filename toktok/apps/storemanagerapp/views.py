@@ -72,17 +72,22 @@ class FoodAddItemPage(TemplateView):
         return render(request, self.template_name, context)
     
     def post(self, request, *args, **kwargs):
-        return HttpResponse(request.POST.get("food_addons"))
+        
+        
+        return HttpResponse(request.POST.getlist("food_variations"))
 
 class FoodAllMenus(TemplateView):
     template_name = 'storemanagerapp/foods/all_menus.html'
 
     def get(self, request, *args, **kwargs):
         food_menus = restaurant_models.MenuCollection.objects.all()
-        food_items_of_menus = [restaurant_models.Food.objects.get(id=food_menu.id) for food_menu in food_menus]
+        food_items_of_menus = None
+        for food_menu in food_menus:
+            food_items = restaurant_models.Food.objects.filter(MenuCollection=food_menu.id)
+            if len(food_items) != 0:
+                food_items_of_menus += food_items 
         context = {
-            "test":range(len([1,2,3])),
-            "testlen":3,
+            "menu_range": range(len(food_menus)-1),
             "food_menus": food_menus,
             "food_items_of_menus": food_items_of_menus
         }
@@ -99,7 +104,13 @@ class FoodAddNewMenu(TemplateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        return HttpResponse(request.POST.get("food_items"))
+        menu_name = request.POST.get("menu_name")
+        food_items = request.POST.getlist("menu_name")
+
+        menu = restaurant_models.MenuCollection(name=menu_name, manager=request.user)
+        menu.save()
+        print(menu)
+        return redirect('store_manager_food_all_menus')
 
 class FoodAllAddons(TemplateView):
     template_name = 'storemanagerapp/foods/all_addons.html'
@@ -145,6 +156,12 @@ class RestaurantAddNew(TemplateView):
 
 class RestaurantAll(TemplateView):
     template_name = "storemanagerapp/restaurant/all_restaurant.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class GeneralSettings(TemplateView):
+    template_name = "storemanagerapp/settings/general.html"
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)

@@ -46,11 +46,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        {% for food_menu in test %}
+                                        {% for food_items_of_menu in food_items_of_menus %}
                                         <tr>
-                                            <td>{{ food_menu }}</td>
-                                            <td>{{ food_menu }}</td>
+                                            <td>{{ food_items_of_menu.name }}</>
+                                            <td>{{ food_items_with_menu.name }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
                                                 <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>

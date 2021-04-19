@@ -27,5 +27,10 @@ restaurantUrlPatterns = [
     path('restaurant/', views.RestaurantAll.as_view(), name = "restaurant_all")
 ]
 
+settingsUrlPatterns = [
+    path('settings/general', views.GeneralSettings.as_view(), name="settings_general")
+]
+
 urlpatterns += foodUrlPatterns
 urlpatterns += restaurantUrlPatterns
+urlpatterns += settingsUrlPatterns
