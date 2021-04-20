@@ -10,11 +10,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>All Food Variations</h1>
+                    <h1>All Branches</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="{% url 'store_manager_food_add_new_variation' %}"><button type="button" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>&nbspAdd Food Variations</button></a>
+                        <a href="{% url 'restaurant_add_new' %}"><button type="button" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>&nbspAdd New Branch</button></a>
                     </ol>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                         <!-- form start -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">All Food Variation</h3>
+                                <h3 class="card-title">All Branches</h3>
 
                             </div>
                             <!-- /.card-header -->
@@ -50,13 +50,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for variation in variations %}
+                                        {% for restaurant in restaurants %}
                                         <tr>
-                                            <td>{{ variation.name }}</td>
-                                            <td></td>
+                                            <td>{{ restaurant.name }}</td>
+                                            <td>{{ restaurant.location.name }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>
+                                                <a href="{% url 'store_manager_menu_delete_item' id=restaurant.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}

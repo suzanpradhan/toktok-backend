@@ -12,13 +12,16 @@ urlpatterns = [
 
 
 foodUrlPatterns = [
-    path('food/item/', views.FoodAllItems.as_view(), name='store_manager_food_all_items'),
+    path('food/item/all', views.FoodAllItems.as_view(), name='store_manager_food_all_items'),
     path('food/item/new', views.FoodAddItemPage.as_view(), name='store_manager_food_add_new_item'),
-    path('food/menu/', views.FoodAllMenus.as_view(), name='store_manager_food_all_menus'),
-    path('food/addon', views.FoodAllAddons.as_view(), name='store_manager_food_all_addons'),
+    path('food/item/<int:id>/delete', views.FoodItemDelete.as_view(), name='store_manager_food_delete_item'),
+    path('food/menu/all', views.FoodAllMenus.as_view(), name='store_manager_food_all_menus'),
+    path('food/menu/<int:id>/delete', views.FoodMenuDelete.as_view(), name='store_manager_menu_delete_item'),
+    path('food/addon/all', views.FoodAllAddons.as_view(), name='store_manager_food_all_addons'),
     path('food/menu/new', views.FoodAddNewMenu.as_view(), name='store_manager_food_add_new_menu'),
     path('food/addon/new', views.FoodAddNewAddon.as_view(), name='store_manager_food_add_new_addon'),
-    path('food/variation', views.FoodAllVariations.as_view(), name='store_manager_food_all_variations'),
+    path('food/variation/all', views.FoodAllVariations.as_view(), name='store_manager_food_all_variations'),
+    path('food/variation/<int:id>/delete', views.FoodVariationDelete.as_view(), name='store_manager_menu_delete_item'),
     path('food/variation/new', views.FoodAddNewVariation.as_view(), name='store_manager_food_add_new_variation')
 ]
 

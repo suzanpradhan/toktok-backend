@@ -24,21 +24,30 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="{% url 'store_manager_food_add_new_item' %}" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="{% url 'settings_general' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="full_name">Full Name</label>
-                                    <input type="text" class="form-control" name="full_name" placeholder="eg. Alex Brooker">
+                                    <input type="text" class="form-control" name="full_name" value="{{ store_manager_detail.name }}" placeholder="eg. Alex Brooker">
+
+                                    
                                 </div>
 
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <input type="text" class="form-control" name="description">
+                                    <input type="text" class="form-control" value="{{ store_manager_detail.description }}" name="description">
                                 </div>
 
+                                
                                 <div class="form-group">
                                     <label for="exampleInputFile">Cover Image</label>
+                                    
+                                    <div class="image" style="display: flex; flex-direction: column; width: 140px; height: 120px; margin-bottom: 32px;">
+                                        {% if store_manager_detail.cover_image %}
+                                        <img src="{{ store_manager_detail.cover_image.url }}" alt="">
+                                        {% endif %}
+                                    </div>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="cover_image" id="exampleInputFile">
@@ -47,8 +56,15 @@
                                     </div>
                                 </div>
 
+                                
                                 <div class="form-group">
                                     <label for="exampleInputFile">Favicon Icon</label>
+                                    <div class="image" style="display: flex; flex-direction: column; width: 140px; height: 120px; border-radius: 8px; margin-bottom: 32px;">
+                                        {% if store_manager_detail.favicon %}
+                                        <img src="{{ store_manager_detail.favicon.url }}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="favicon_icon" id="exampleInputFile">
@@ -59,17 +75,17 @@
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" name="description">
+                                    <input type="text" class="form-control" value="{{ store_manager_detail.location.name }}" name="address">
                                 </div>
 
                                 <div class="d-flex row">
                                     <div class="form-group flex-fill">
                                         <label for="latitude">Latitude</label>
-                                        <input type="text" class="form-control" name="description">
+                                        <input type="number" step="0.000001" class="form-control" value="{{ store_manager_detail.location.latitude }}" name="latitude">
                                     </div>
                                     <div class="form-group flex-fill">
                                         <label for="longitude">Longitude</label>
-                                        <input type="text" class="form-control" name="description">
+                                        <input type="number" step="0.000001" class="form-control" value="{{ store_manager_detail.location.longitude }}" name="longitude">
                                     </div>
                                 </div>
                             </div>

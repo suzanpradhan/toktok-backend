@@ -5,8 +5,8 @@ from django.conf import settings
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
-    cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE, blank=True, null=True)
     location = models.ForeignKey(basicapp_model.Location, on_delete=models.CASCADE)
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
@@ -16,19 +16,20 @@ class MenuCollection(models.Model):
         
 class SubType(models.Model):
     name = models.CharField(max_length=255)
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     
 class Addons(models.Model):
     name = models.CharField(max_length=255)
-    amountInCents = models.IntegerField()  
+    amountInCents = models.IntegerField()
     description = models.TextField()
 
 class Food(models.Model):
     name = models.CharField(max_length=255)
     sku = models.CharField(max_length=255, null=True)
-    description = models.TextField()
-    cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE)
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    amountInCents = models.IntegerField()
+    description = models.TextField(blank=True, null=True)
+    cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE, blank=True, null=True)
+    manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    amountInCents = models.IntegerField(null=True)
     MenuCollection = models.ForeignKey(MenuCollection, on_delete=models.CASCADE)
     addons = models.ManyToManyField(Addons)
 

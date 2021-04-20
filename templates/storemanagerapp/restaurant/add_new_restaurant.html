@@ -26,19 +26,19 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form" action="{% url 'store_manager_food_add_new_item' %}" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="{% url 'restaurant_add_new' %}" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="foodName1">Restaurant Name</label>
-                                    <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. Spicy Burger">
+                                    <label for="restaurant_name">Restaurant Name</label>
+                                    <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" REQUIRED> 
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="foodName1">Description</label>
+                                    <label for="restaurant_description">Description</label>
                                     <div class="card-body">
-                                        <textarea name="food_name" id="summernote">
-                                            Place some text here.
+                                        <textarea name="restaurant_description" id="summernote" placeholder="Place some text here.">
+                                            
                                         </textarea>
                                     </div>
                                 </div>
@@ -47,21 +47,26 @@
                                     <label for="exampleInputFile">Restaurant Cover Image</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="food_image" id="exampleInputFile">
+                                            <input type="file" class="custom-file-input" name="restaurant_image" id="exampleInputFile">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="restaurant_address">Address</label>
+                                    <input type="text" class="form-control" name="restaurant_address" id="restaurant_address" REQUIRED>
+                                </div>
+
                                 <div class="row d-flex">
                                     <div class="form-group flex-fill">
-                                        <label for="foodName1">Latitude</label>
-                                        <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. 438.245245">
+                                        <label for="latitude">Latitude</label>
+                                        <input type="number" step="0.000001" class="form-control" name="latitude" id="latitude" placeholder="eg. 438.245245">
                                     </div>
                                     <div class="space" style="width: 24px;"></div>
                                     <div class="form-group flex-fill">
-                                        <label for="foodName1">Longitude</label>
-                                        <input type="text" class="form-control" name="food_name" id="foodName1" placeholder="eg. 27.43985425">
+                                        <label for="longitude">Longitude</label>
+                                        <input type="number" step="0.000001" class="form-control" name="longitude" id="longitude" placeholder="eg. 27.43985425">
                                     </div>
                                 </div>
 
