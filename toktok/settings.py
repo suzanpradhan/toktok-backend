@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'mathfilters',
     'toktok.apps.imagegallery',
     'toktok.apps.basicapp',
+    'toktok.apps.customer',
+    'toktok.apps.orders',
     'toktok.apps.restaurant',
     'toktok.apps.storemanagerapp',
     'django.contrib.admin',
@@ -154,4 +156,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
-
