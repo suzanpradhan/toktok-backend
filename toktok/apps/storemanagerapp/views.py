@@ -322,6 +322,7 @@ class GeneralSettings(TemplateView):
             location.longitude = longitude
             location.save()
             store_manager_detail.location = location
+        store_manager_detail.manager = request.user
         store_manager_detail.save()
         return redirect("settings_general")
 
