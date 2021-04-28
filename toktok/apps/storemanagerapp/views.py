@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 # from django.contrib.auth.mixins import LoginRequiredMixin
 # from .mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import IsStoreManagerMixin
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
@@ -43,6 +44,7 @@ class StoreMangerLogin(TemplateView):
         email = request.POST.get("email")
         password = request.POST.get("password")
         user = authenticate(request, email=email, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             return redirect('store_manager_dashboard')
@@ -59,6 +61,8 @@ class FoodAllItems(TemplateView):
         }
         return render(request, self.template_name, context)
 
+
+
 class FoodItemDelete(TemplateView):
 
     def get(self, request, id,  *args, **kwargs):
@@ -70,13 +74,15 @@ class FoodItemDelete(TemplateView):
             return redirect('store_manager_food_all_items')
         
 
-class FoodAddItemPage(LoginRequiredMixin, TemplateView):
+class FoodAddItemPage(LoginRequiredMixin,IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/add_new_item.html'
     login_url = "store_manager_login"
+    redirect_url="store_manager_dashboard"
     redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
-        food_menus = restaurant_models.MenuCollection.objects.filter(manager=request.user)
+        manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
+        food_menus = restaurant_models.MenuCollection.objects.filter(manager=manager_model)
         # food_addons = restaurant_models.Addons.objects.all()
         # food_variations = restaurant_models.SubType.objects.all()
         context = {
@@ -120,6 +126,53 @@ class FoodAddItemPage(LoginRequiredMixin, TemplateView):
                     food.addons.add(variation)
         
         return redirect('store_manager_food_all_items')
+
+class FoodItemUpdate(TemplateView):
+    template_name = "storemanagerapp/foods/add_update_item.html"
+
+    def get(self, request, *args, **kwargs):
+        food_menus = restaurant_models.MenuCollection.objects.filter(manager=request.user)
+        context = {
+            "food_menus" : food_menus,
+        }
+        return render(request, self.template_name, context)
+
+
+    def post(self, request,foodMenuID, *args, **kwargs):
+        food_name = request.POST.get('food_name')
+        food_sku = request.POST.get('food_sku')
+        food_description = request.POST.get('food_description')
+        food_menu = request.POST.get('food_menu')
+        food_image = request.FILES['food_image']
+        food_addons = request.POST.getlist('food_addons')
+        food_variations = request.POST.getlist('food_variations')
+        price = int(float(request.POST.get('item_price'))*100)
+        store_manager = request.user
+
+        food = restaurant_models.Food()
+        food.name = food_name
+        food.sku = food_sku
+        food.description = food_description
+        if food_image:
+            image = image_gallery_models.Image()
+            image.image_name = food_image.name
+            image.image = food_image
+            image.save()
+            food.cover_image = image
+        food.manager = store_manager
+        food.amountInCents = price
+        if food_menu:
+            menu = restaurant_models.MenuCollection.objects.get(name=food_menu)
+            food.MenuCollection = menu
+        food.save()
+        if food_addons:
+            for food_addon in food_addons:
+                if food_addon:
+                    variation = restaurant_models.Addons.objects.get(name=food_addon)
+                    food.addons.add(variation)
+        
+        return redirect('store_manager_food_all_items')
+
 
 class FoodAllMenus(TemplateView):
     template_name = 'storemanagerapp/foods/all_menus.html'

@@ -17,7 +17,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Add New Item</h3>
@@ -112,7 +112,98 @@
                     </div>
 
                 </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Food Variations</h3>
+                            <div class="card-tools float-right">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i>&nbspAdd Variation</button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table" id="added_food_variations">
+                            <thead>
+                                <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Variation</th>
+                                <th>Extra Price</th>
+                                <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>Variation</td>
+                                    <td>+ $70</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
+                                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                    <td>Variation</td>
+                                    <td>+ $70</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
+                                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>Variation</td>
+                                    <td>+ $70</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
+                                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
+
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form id="add-variation-form" method="post">
+                        <div class="modal-header">
+                        <h4 class="modal-title">Add Variation</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="variation_name">Variation Name</label>
+                                <input type="text" class="form-control" name="variation_name" id="variation_name" placeholder="eg. Large" REQUIRED>
+                            </div>
+                            <div class="form-group">
+                                <label for="variation_price">Price</label>
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" step="0.01" min="0" name="variation_price" id="variation_price" class="form-control" REQUIRED>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        
+                        </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
         </div>
         <!-- /.container-fluid -->
     </section>
@@ -128,6 +219,23 @@
 {% block scripts %}
 
 <script>
+    $('#add-variation-form').on('submit', function(e) {
+        e.preventDefault();
+        alert($('#variation_name').val());
+        new_variation = "<tr>"
+            + "<td>1.</td>"
+            + "<td>Variation</td>"
+            + "<td>+ $70</td>"
+            + "<td>"
+            + "<button type='button' class='btn btn-sm btn-primary'><i class='fas fa-edit'></i>&nbspEdit</button>"
+            + '<button type="button" class="btn btn-sm btn-danger">Delete</button>'
+            + "</td>"
+            + "</tr>";
+
+        $("#added_food_variations>tbody").append(new_variation);
+        
+    });
+    
     $(function() {
         // Summernote
         $('#summernote').summernote()

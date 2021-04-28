@@ -5,7 +5,7 @@ from . import manager as store_manager
 from django.conf import settings
 
 
-class StoreManagerBasicDetial(models.Model):
+class StoreManagerBasicDetail(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
