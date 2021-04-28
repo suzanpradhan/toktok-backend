@@ -2,7 +2,7 @@ from django.db import models
 from toktok import settings
 from toktok.apps.restaurant.models import Food,Restaurant
 from toktok.apps.basicapp.models import Location
-from toktok.apps.storemanagerapp.models import StoreManagerBasicDetial
+from toktok.apps.storemanagerapp.models import StoreManagerBasicDetail
 
 
 class FoodOrder(models.Model):
@@ -15,7 +15,7 @@ class Order(models.Model):
         (3,"Delivering"),
         (4,"Delivered"),
     )
-    manager = models.ForeignKey(StoreManagerBasicDetial, on_delete=models.CASCADE, null=True)
+    manager = models.ForeignKey(StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
     foodOrder = models.ForeignKey(FoodOrder,on_delete=models.CASCADE,null=True)
     restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE,null=True)
     location = models.ForeignKey(Location,on_delete=models.CASCADE,null=True)

@@ -286,7 +286,7 @@ class GeneralSettings(TemplateView):
     def get(self, request, *args, **kwargs):
         store_manager_detail = None
         try:
-            store_manager_detail = store_manager_app_models.StoreManagerBasicDetial.objects.get(manager=request.user)
+            store_manager_detail = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
             print(store_manager_detail)
             print(store_manager_detail.name)
         except Exception as e:
@@ -305,9 +305,9 @@ class GeneralSettings(TemplateView):
         longitude = request.POST.get('longitude')
 
         try:
-            store_manager_detail = store_manager_app_models.StoreManagerBasicDetial.objects.get(manager=request.user)
+            store_manager_detail = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
         except Exception as e:
-            store_manager_detail = store_manager_app_models.StoreManagerBasicDetial()
+            store_manager_detail = store_manager_app_models.StoreManagerBasicDetail()
         store_manager_detail.name = full_name
         store_manager_detail.description = description
         if request.FILES:
