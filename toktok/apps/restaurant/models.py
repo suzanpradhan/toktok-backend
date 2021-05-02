@@ -38,3 +38,9 @@ class FoodSubType(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     subtype = models.ForeignKey(SubType, on_delete=models.CASCADE)
     amountInCents = models.IntegerField()
+
+class FoodCombo(models.Model):
+    name = models.CharField(max_length=255)
+    foods = models.ManyToManyField(Food)
+    priceInCents = models.IntegerField()
+    image = models.ForeignKey(image_gallery_model.Image)
