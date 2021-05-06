@@ -55,8 +55,8 @@
                                             <td>{{ restaurant.name }}</td>
                                             <td>{{ restaurant.location.name }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <a href="{% url 'store_manager_menu_delete_item' id=restaurant.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
+                                                <a href="{% url 'restaurant_update' id=restaurant.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href=""><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -66,7 +66,7 @@
                                         <tr>
                                             <th>Restaurant Name</th>
                                             <th>Address</th>
-                                            <th>Actions</th
+                                            <th>Actions</th>
                                         </tr>
                                     </tfoot>
                                 </table>

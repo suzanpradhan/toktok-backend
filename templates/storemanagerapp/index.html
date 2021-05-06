@@ -39,9 +39,9 @@
 
   <script>
       $(function() {
-          console.log(location.pathname.split('/')[1]);
+          console.log(location.pathname);
         $('nav a').removeClass('active');
-        $('nav a[href^="/' +location.pathname.split('/')[1] + '"]').addClass('active');
+        $('nav a[href^="' +location.pathname + '"]').addClass('active');
       });
   </script>
 </body>

@@ -51,7 +51,7 @@
                                             <td>{{ food_addon.name }}</td>
                                             <td>{{ food_addon.amountInCents }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
+                                                <a href="{% url 'store_manager_food_update_addon' id=food_addon.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
                                                 <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>
                                             </td>
                                         </tr>

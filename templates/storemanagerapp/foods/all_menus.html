@@ -49,8 +49,8 @@
                                         <tr>
                                             <td>{{ food_menu.name }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <a href="{% url 'store_manager_menu_delete_item' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
+                                                <a href="{% url 'store_manager_menu_update_menu' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href=""><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
