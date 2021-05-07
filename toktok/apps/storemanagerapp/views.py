@@ -15,10 +15,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import IsStoreManagerMixin
 
 
-class Dashboard(LoginRequiredMixin, TemplateView):
+class Dashboard(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = "storemanagerapp/dashboard.html"
     login_url = "store_manager_login"
+    redirect_url="store_manager_login"
     redirect_field_name = "hollaback"
+    
     def get(self, request, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
         food_items = restaurant_models.Food.objects.filter(manager=manager_model)
@@ -48,8 +50,11 @@ class StoreMangerLogin(TemplateView):
         else:
             return redirect('store_manager_login')
 
-class FoodAllItems(TemplateView):
+class FoodAllItems(LoginRequiredMixin,IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/foods/all_items.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         food_items = restaurant_models.Food.objects.all()
@@ -60,7 +65,10 @@ class FoodAllItems(TemplateView):
 
 
 
-class FoodItemDelete(TemplateView):
+class FoodItemDelete(LoginRequiredMixin,IsStoreManagerMixin,TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, id,  *args, **kwargs):
         try:
@@ -75,7 +83,7 @@ class FoodItemDelete(TemplateView):
 class FoodAddItemPage(LoginRequiredMixin,IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/add_new_item.html'
     login_url = "store_manager_login"
-    redirect_url="store_manager_dashboard"
+    redirect_url="store_manager_login"
     redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
@@ -98,7 +106,7 @@ class FoodAddItemPage(LoginRequiredMixin,IsStoreManagerMixin, TemplateView):
         food_variations_IDs = request.POST.getlist('variations[]')
         print(food_menu)
         print(food_variations_IDs)
-        price = int(float(request.POST.get('item_price'))*100)
+        price = request.POST.get('item_price')
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
         food = restaurant_models.Food()
         food.name = food_name
@@ -133,7 +141,7 @@ class FoodAddItemPage(LoginRequiredMixin,IsStoreManagerMixin, TemplateView):
 class FoodItemUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = "storemanagerapp/foods/update_item.html"
     login_url = "store_manager_login"
-    redirect_url="store_manager_dashboard"
+    redirect_url="store_manager_login"
     redirect_field_name = "hollaback"
 
     def get(self, request,id, *args, **kwargs):
@@ -159,7 +167,7 @@ class FoodItemUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
         food_menu = request.POST.get('food_menu')
         food_addons = request.POST.getlist('food_addons')
         food_variations_IDs = request.POST.getlist('variations[]')
-        price = int(float(request.POST.get('item_price'))*100)
+        price = request.POST.get('item_price')
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
 
         food = restaurant_models.Food.objects.get(id=id)
@@ -184,7 +192,7 @@ class FoodItemUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
                 if food_addon:
                     addon = restaurant_models.Addons.objects.get(id=food_addon)
                     food.addons.add(addon)
-        if food_variations_IDs is not None and len(food_variations_IDs) > 1:
+        if food_variations_IDs is not None and len(food_variations_IDs) > 0:
             for food_variation_ID in food_variations_IDs:
                 if food_variation_ID:
                     variation = restaurant_models.FoodSubType.objects.get(id=food_variation_ID)
@@ -192,8 +200,11 @@ class FoodItemUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
         return redirect('store_manager_food_all_items')
 
 
-class FoodAllMenus(TemplateView):
+class FoodAllMenus(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = 'storemanagerapp/foods/all_menus.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         food_menus = restaurant_models.MenuCollection.objects.all()
@@ -209,7 +220,10 @@ class FoodAllMenus(TemplateView):
         }
         return render(request, self.template_name, context)
 
-class FoodMenuDelete(TemplateView):
+class FoodMenuDelete(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
     
     def get(self, request, id,  *args, **kwargs):
         try:
@@ -221,8 +235,11 @@ class FoodMenuDelete(TemplateView):
             return redirect('store_manager_food_all_menus')
 
 
-class FoodAddNewMenu(TemplateView):
+class FoodAddNewMenu(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = 'storemanagerapp/foods/add_new_menu.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         food_items = restaurant_models.Food.objects.all()
@@ -244,8 +261,11 @@ class FoodAddNewMenu(TemplateView):
                 food.save()
         return redirect('store_manager_food_all_menus')
 
-class FoodUpdateMenu(TemplateView):
+class FoodUpdateMenu(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/update_menu.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request,id,  *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -275,8 +295,11 @@ class FoodUpdateMenu(TemplateView):
         
         return redirect('store_manager_food_all_menus')
 
-class FoodAllAddons(TemplateView):
+class FoodAllAddons(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/all_addons.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -286,8 +309,11 @@ class FoodAllAddons(TemplateView):
         }
         return render(request, self.template_name, context)
 
-class FoodAddNewAddon(TemplateView):
+class FoodAddNewAddon(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/add_new_addon.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
@@ -295,14 +321,17 @@ class FoodAddNewAddon(TemplateView):
     def post(self, request, *args, **kwargs):
         addon_name = request.POST.get('addon_name')
         price = float(request.POST.get('addon_price'))
-        addon = restaurant_models.Addons(name=addon_name, amountInCents=int(price*100))
+        addon = restaurant_models.Addons(name=addon_name, amountInCents=price)
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
         addon.manager = manager_model
         addon.save()
         return redirect('store_manager_food_all_addons')
 
-class FoodUpdateAddon(TemplateView):
+class FoodUpdateAddon(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = 'storemanagerapp/foods/update_addon.html'
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request,id, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -320,11 +349,14 @@ class FoodUpdateAddon(TemplateView):
         if addon_name:
             addon.name = addon_name
         if price:
-            addon.amountInCents = int(price*100)
+            addon.amountInCents = price
         addon.save()
         return redirect('store_manager_food_all_addons')
 
-class FoodAddonDelete(TemplateView):
+class FoodAddonDelete(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
     def get(self, request,id, *args, **kwargs):
         try:
             manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -345,7 +377,10 @@ class FoodAddonDelete(TemplateView):
 #         }
 #         return render(request, self.template_name, context)
 
-class FoodVariationDelete(TemplateView):
+class FoodVariationDelete(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
     
     def post(self, request, *args, **kwargs):
         variation_id = request.POST.get('variation_id');
@@ -363,11 +398,14 @@ class FoodVariationDelete(TemplateView):
             }
             return JsonResponse(message)
     
-class FoodAddNewVariation(TemplateView):
+class FoodAddNewVariation(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     # template_name = 'storemanagerapp/foods/add_new_variation.html'
 
     # def get(self, request, *args, **kwargs):
     #     return render(request, self.template_name)
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def post(self, request, *args, **kwargs):
 
@@ -380,7 +418,7 @@ class FoodAddNewVariation(TemplateView):
             subType = restaurant_models.SubType(name=variation_name, manager=manager_model)
             subType.save()
             if subType:
-                foodSubType = restaurant_models.FoodSubType(subtype=subType,amountInCents= price*100)
+                foodSubType = restaurant_models.FoodSubType(subtype=subType,amountInCents= price)
                 foodSubType.save()
                 savedFoodType = restaurant_models.FoodSubType.objects.get(id=foodSubType.pk)
                 jsonResponseData = {
@@ -397,8 +435,11 @@ class FoodAddNewVariation(TemplateView):
             return redirect('store_manager_food_all_variations')
 
 
-class RestaurantAddNew(TemplateView):
+class RestaurantAddNew(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/restaurant/add_new_restaurant.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
@@ -433,8 +474,11 @@ class RestaurantAddNew(TemplateView):
         return redirect('restaurant_all')
 
 
-class RestaurantUpdate(TemplateView):
+class RestaurantUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = "storemanagerapp/restaurant/update_restaurant.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, id , *args, **kwargs):
         manager = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -474,8 +518,11 @@ class RestaurantUpdate(TemplateView):
         restaurant.save()
         return redirect('restaurant_all')
 
-class RestaurantAll(TemplateView):
+class RestaurantAll(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/restaurant/all_restaurant.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -485,7 +532,10 @@ class RestaurantAll(TemplateView):
         }
         return render(request, self.template_name, context)
 
-class RestaurantDelete(TemplateView):
+class RestaurantDelete(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
     
     def get(self, request, id,  *args, **kwargs):
         try:
@@ -496,8 +546,11 @@ class RestaurantDelete(TemplateView):
         except Exception as e:
             return redirect('restaurant_all')
 
-class GeneralSettings(TemplateView):
+class GeneralSettings(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/settings/general.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         store_manager_detail = None
@@ -544,8 +597,11 @@ def logoutStoreManagerUser(request):
     logout(request)
     return redirect('store_manager_dashboard')
 
-class FoodComboAll(TemplateView):
+class FoodComboAll(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/foods/all_foodcombos.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -555,8 +611,11 @@ class FoodComboAll(TemplateView):
         }
         return render(request, self.template_name, context)
 
-class FoodComboAddNew(TemplateView):
+class FoodComboAddNew(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
     template_name = "storemanagerapp/foods/add_new_foodcombo.html"
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
 
     def get(self, request, *args, **kwargs):
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -571,7 +630,7 @@ class FoodComboAddNew(TemplateView):
     def post(self, request, *args, **kwargs):
         foodcombo_name = request.POST.get('foodcombo_name')
         foodcombo_description = request.POST.get('foodcombo_description')
-        price = int(float(request.POST.get('price'))*100)
+        price = request.POST.get('price')
         foodcombo_addons = request.POST.getlist('foodcombo_addons')
         foodcombo_foods = request.POST.getlist('foodcombo_foods')
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -601,7 +660,10 @@ class FoodComboAddNew(TemplateView):
                     foodcombo.foods.add(food)
         return redirect('store_manager_foodcombo_all')
 
-class FoodComboDelete(TemplateView):
+class FoodComboDelete(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
+    login_url = "store_manager_login"
+    redirect_url="store_manager_login"
+    redirect_field_name = "hollaback"
     def get(self, request, id,  *args, **kwargs):
         try:
             manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
@@ -614,7 +676,7 @@ class FoodComboDelete(TemplateView):
 class FoodComboUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     template_name = "storemanagerapp/foods/update_foodcombo.html"
     login_url = "store_manager_login"
-    redirect_url="store_manager_dashboard"
+    redirect_url="store_manager_login"
     redirect_field_name = "hollaback"
 
     def get(self, request,id, *args, **kwargs):
@@ -636,7 +698,7 @@ class FoodComboUpdate(LoginRequiredMixin, IsStoreManagerMixin, TemplateView):
     def post(self, request,id, *args, **kwargs):
         foodcombo_name = request.POST.get('foodcombo_name')
         foodcombo_description = request.POST.get('foodcombo_description')
-        price = int(float(request.POST.get('price'))*100)
+        price = request.POST.get('price')
         foodcombo_addons = request.POST.getlist('foodcombo_addons')
         foodcombo_foods = request.POST.getlist('foodcombo_foods')
         manager_model = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)

@@ -21,13 +21,13 @@ class SubType(models.Model):
     
 class Addons(models.Model):
     name = models.CharField(max_length=255)
-    amountInCents = models.IntegerField()
+    amountInCents = models.FloatField()
     description = models.TextField()
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
 
 class FoodSubType(models.Model):
     subtype = models.ForeignKey(SubType, on_delete=models.CASCADE)
-    amountInCents = models.IntegerField()
+    amountInCents = models.FloatField()
 
 class Food(models.Model):
     name = models.CharField(max_length=255)
@@ -35,7 +35,7 @@ class Food(models.Model):
     description = models.TextField(blank=True, null=True)
     cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE, blank=True, null=True)
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
-    amountInCents = models.IntegerField(null=True)
+    amountInCents = models.FloatField(null=True)
     MenuCollection = models.ForeignKey(MenuCollection, on_delete=models.CASCADE, null=True)
     subtypes = models.ManyToManyField(FoodSubType)
     addons = models.ManyToManyField(Addons)
@@ -47,5 +47,5 @@ class FoodCombo(models.Model):
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
     foods = models.ManyToManyField(Food)
     addons = models.ManyToManyField(Addons)
-    amountInCents = models.IntegerField(null=True)
+    amountInCents = models.FloatField(null=True)
 
