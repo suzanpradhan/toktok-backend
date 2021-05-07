@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-x0v31*z4313rjq6evzls5q=1%-to5n(6y6jj^akx52)_d$6f^-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'toktok.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': 'camwmqlx_toktokbackend',
         'USER': 'camwmqlx_suzan',
         'PASSWORD': 'Sujan12345@',
