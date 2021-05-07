@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="full_name">Full Name</label>
-                                    <input type="text" class="form-control" name="full_name" value="{{ store_manager_detail.name }}" placeholder="eg. Alex Brooker">
+                                    <input type="text" class="form-control" name="full_name" value="{{ store_manager_detail.name }}" placeholder="eg. Mc Donald">
 
                                     
                                 </div>
@@ -42,12 +42,9 @@
                                 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Cover Image</label>
-                                    
-                                    <div class="image" style="display: flex; flex-direction: column; width: 140px; height: 120px; margin-bottom: 32px;">
-                                        {% if store_manager_detail.cover_image %}
-                                        <img src="{{ store_manager_detail.cover_image.url }}" alt="">
-                                        {% endif %}
-                                    </div>
+                                    {% if store_manager_detail.cover_image.url %}
+                                        <img src="{{ store_manager_detail.cover_image.url }}"  style="height: 240px; display: block;" alt="">
+                                    {% endif %}
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="cover_image" id="exampleInputFile1">
@@ -56,7 +53,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                {% comment %} <div class="form-group">
                                     <label for="exampleInputFile">File input</label>
                                     <div class="input-group">
                                     <div class="custom-file">
@@ -67,16 +64,14 @@
                                         <span class="input-group-text">Upload</span>
                                     </div>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
 
                                 
                                 <div class="form-group">
                                     <label for="exampleInputFile">Favicon Icon</label>
-                                    <div class="image" style="display: flex; flex-direction: column; width: 140px; height: 120px; border-radius: 8px; margin-bottom: 32px;">
-                                        {% if store_manager_detail.favicon %}
-                                        <img src="{{ store_manager_detail.favicon.url }}" alt="">
-                                        {% endif %}
-                                    </div>
+                                    {% if store_manager_detail.favicon.url %}
+                                        <img src="{{ store_manager_detail.favicon.url }}" style="height: 240px; display: block;" alt="">
+                                    {% endif %}
                                     
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -127,7 +122,20 @@
 {% block scripts %}
 
 <script>
+    $(".custom-file-input").change(function(){
+        readURL(this);
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                {% comment %} console.log(e.target.result); {% endcomment %}
+                $(input).closest('.form-group').find('img').attr("src", e.target.result); 
+            }
 
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 
 {% endblock scripts %}

@@ -40,3 +40,12 @@ class Food(models.Model):
     subtypes = models.ManyToManyField(FoodSubType)
     addons = models.ManyToManyField(Addons)
 
+class FoodCombo(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    cover_image = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE, blank=True, null=True)
+    manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
+    foods = models.ManyToManyField(Food)
+    addons = models.ManyToManyField(Addons)
+    amountInCents = models.IntegerField(null=True)
+

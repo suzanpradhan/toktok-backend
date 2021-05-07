@@ -6,11 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>All Food Menus</h1>
+                    <h1>All FoodCombos</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <a href="{% url 'store_manager_food_add_new_menu' %}"><button type="button" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>&nbspAdd New Menu</button></a>
+                        <a href="{% url 'store_manager_food_add_new_foodcombo' %}"><button type="button" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>&nbspAdd New Item</button></a>
                     </ol>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                         <!-- form start -->
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">All Food Menus</h3>
+                                <h3 class="card-title">All FoodCombos</h3>
 
                             </div>
                             <!-- /.card-header -->
@@ -40,24 +40,27 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Menu</th>
+                                            <th>FoodCombo</th>
+                                            <th>Price(In Cents)</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for food_menu in food_menus %}
+                                        {% for foodCombo in foodCombos %}
                                         <tr>
-                                            <td>{{ food_menu.name }}</td>
+                                            <td>{{ foodCombo.name }}</td>
+                                            <td>{{ foodCombo.amountInCents }}</td>
                                             <td>
-                                                <a href="{% url 'store_manager_menu_update_menu' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
-                                                <a href="{% url 'store_manager_menu_delete_menu' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
+                                                <a href="{% url 'store_manager_update_foodcombo' id=foodCombo.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href="{% url 'store_manager_delete_foodcombo' id=foodCombo.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Menu</th>
+                                            <th>FoodCombo</th>
+                                            <th>Price(In Cents)</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
