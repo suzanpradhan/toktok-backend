@@ -1,0 +1,216 @@
+{% extends 'storemanagerapp/index.html' %} {% load static %} {% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Update FoodCombos</h1>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form role="form" action="{% url 'store_manager_update_foodcombo' id=foodCombo.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Update FoodCombos</h3>
+                            
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="foodName1">Food Name</label>
+                                    <input type="text" class="form-control" name="foodcombo_name" id="foodName1" value="{{foodCombo.name}}" placeholder="eg. Spicy Burger" REQUIRED>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="summernote">Description</label>
+                                    <div class="card-body">
+                                        <textarea name="foodcombo_description" value="{{food.sku}}" id="summernote">{{foodCombo.description}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputFile">FoodCombos Image</label>
+                                    {% if foodCombo.cover_image.image %}
+                                        <img src="{{foodCombo.cover_image.image.url}}" style="height: 240px; display: block;" alt="">
+                                    {% endif %}
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="foodcombo_image" id="exampleInputFile">
+                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Food Items</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" name="foodcombo_foods" value="" id="add_foodcombo_foods_select2" multiple="multiple" data-placeholder="Select Food Items" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    {% if foods %}
+                                        {% for food in foods %}
+                                            <option value="{{food.id}}">{{ food.name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Addons</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" name="foodcombo_addons" value="" id="add_foodcombo_addons_select2" multiple="multiple" data-placeholder="Select Addons" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    {% if addons %}
+                                        {% for addon in addons %}
+                                            <option value="{{addon.id}}">{{ addon.name }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="number" step="0.01" min="0" name="price" id="price" value="{{ foodCombo.amountInCents }}" class="form-control" REQUIRED>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        
+                    </div>
+
+                </div>
+                
+            </div>
+            </form>
+            <div class="modal fade" id="modal-variation">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form id="add-variation-form" method="post">
+                        <div class="modal-header">
+                        <h4 class="modal-title">Add Variation</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="variation_name">Variation Name</label>
+                                <input type="text" class="form-control" name="variation_name" id="variation_name" placeholder="eg. Large" REQUIRED>
+                            </div>
+                            <div class="form-group">
+                                <label for="variation_price">Price</label>
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" step="0.01" min="0" name="variation_price" id="variation_price" class="form-control" REQUIRED>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        
+                        </div>
+                    </form>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
+{% endblock content %} 
+
+
+{% comment %} EXTRA SCRIPTS {% endcomment %}
+{% block scripts %}
+
+<script>
+
+    $(document).ready(function(){
+
+        {% if foodCombo %}
+            var selectedValues = new Array();
+            {% for addon in foodCombo.addons.all %}
+                {% if addon %}
+                    selectedValues.push("{{ addon.id }}")
+                {% endif %}
+            {% endfor %}
+            $('#add_foodcombo_addons_select2').val(selectedValues);
+            $('#add_foodcombo_addons_select2').trigger('change');
+        {% endif %}
+
+        {% if foodCombo %}
+            var selectedValues = new Array();
+            {% for food in foodCombo.foods.all %}
+                {% if food %}
+                    selectedValues.push("{{ food.id }}")
+                {% endif %}
+            {% endfor %}
+            $('#add_foodcombo_foods_select2').val(selectedValues);
+            $('#add_foodcombo_foods_select2').trigger('change');
+        {% endif %}
+        
+        
+    });
+
+
+    $(".custom-file-input").change(function(){
+        readURL(this);
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                {% comment %} console.log(e.target.result); {% endcomment %}
+                $(input).closest('.form-group').find('img').attr("src", e.target.result); 
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    
+    $(function() {
+        // Summernote
+        $('#summernote').summernote()
+
+        // CodeMirror
+        CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+        });
+    });
+</script>
+
+{% endblock scripts %}

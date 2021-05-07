@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+# import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'mathfilters',
     'toktok.apps.imagegallery',
     'toktok.apps.basicapp',
+    'toktok.apps.customer',
+    'toktok.apps.orders',
     'toktok.apps.restaurant',
     'toktok.apps.storemanagerapp',
     'django.contrib.admin',
@@ -86,18 +88,18 @@ WSGI_APPLICATION = 'toktok.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
 #        'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': 'camwmqlx_toktokbackend',
         'USER': 'camwmqlx_suzan',
         'PASSWORD': 'Sujan12345@',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': '198.187.29.220',
+        'PORT': '',
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -154,4 +156,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
-

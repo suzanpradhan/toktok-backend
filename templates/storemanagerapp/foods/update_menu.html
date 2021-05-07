@@ -1,0 +1,108 @@
+{% extends 'storemanagerapp/index.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Update Menu</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Update Menu</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'store_manager_menu_update_menu' id=food_menu.id %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="menuName1">Menu Name</label>
+                        <input type="text" name="menu_name" class="form-control" id="menuName1" value="{{ food_menu.name }}" placeholder="eg. Spicy Burger" REQUIRED>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Add Items</label>
+                        <div class="select2-purple">
+                            <select class="select2" name="food_items" id="add_food_items_select2" multiple="multiple" data-placeholder="Select Food Items" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                            {% if food_items %}
+                            {% for food_item in food_items %}
+                                <option value="{{food_item.id}}">{{ food_item.name }}</option>
+                            {% endfor %}
+                            {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    {% comment %} <div class="form-group">
+                        <label>Add Items</label>
+                        <select class="form-control select2" id="add_food_items_select2" name="food_items" style="width: 100%;">
+                            {% for food_item in food_items %}
+                              <option>{{ food_item.name }}</option>
+                              
+                            {% endfor %}
+                            <option selected="selected">Menu 1</option>
+                            <option>Menu 2</option>
+                            <option>Menu 3</option>
+                            <option>Menu 4</option>
+                            <option>Menu 5</option>
+                            <option>Menu 6</option>
+                            <option>Menu 7</option>
+                        </select>
+                    </div> {% endcomment %}
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function(){
+    {% if selected_items %}
+      var selectedValues = new Array();
+      {% for selected_item in selected_items %}
+          {% if selected_item %}
+            selectedValues.push("{{ selected_item.id }}")
+          {% endif %}
+      {% endfor %}
+        $('#add_food_items_select2').val(selectedValues);
+        $('#add_food_items_select2').trigger('change');
+    {% endif %}
+
+    
+        
+    });
+</script>
+
+{% endblock scripts %}
