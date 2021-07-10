@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .models import FoodCombo
-from toktok.apps.restaurant.models import Food, MenuCollection
+# from .models import FoodCombo
+from toktok.apps.restaurant.models import Food, MenuCollection, Restaurant
 from toktok.apps.imagegallery.models import Image
 import pandas as pd
 from toktok.apps.storemanagerapp.models import StoreManagerBasicDetail
+from django.http import HttpResponse
+import json
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 class AddUpdateFoodCombo(TemplateView):
     def post(self, request, id,*args,**kwargs):
@@ -70,4 +74,39 @@ class excelImport(TemplateView):
             
             print(name,sku,description,cover_image,manager,amountInCents,MenuColl,subtype,addons)
             print("\n")
+
+def getAllFood(request):
+    if request.method=="GET":
+        foods=[]
+        for food in Food.objects.all():
+            foods.append(food)
+        food =serializers.serialize("json", foods)
+        return HttpResponse(food)
+
+def getAllRestaurant(request):
+    if request.method=="GET":
+        restaurants=[]
+        for restaurant in Restaurant.objects.all():
+            restaurants.append(food)
+        restaurant =serializers.serialize("json", restaurants)
+        return HttpResponse(restaurant)
+
+@csrf_exempt
+def searchFood(request):
+    if request.method=="POST":
         
+        foods=[]
+        for food in Food.objects.filter(name__startswith=request.POST.get("value")):
+            foods.append(food)
+
+        food =serializers.serialize("json", foods)
+        return HttpResponse(food)
+
+@csrf_exempt
+def searchRestaurant(request):
+    if request.method=="POST":
+        restaurants=[]
+        for restaurant in Restaurant.objects.filter(name__startswith=request.POST.get("value")):
+            restaurants.append(restaurant)
+        restaurant =serializers.serialize("json", restaurants)
+        return HttpResponse(restaurant)
