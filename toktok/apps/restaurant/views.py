@@ -87,7 +87,7 @@ def getAllRestaurant(request):
     if request.method=="GET":
         restaurants=[]
         for restaurant in Restaurant.objects.all():
-            restaurants.append(food)
+            restaurants.append(restaurant)
         restaurant =serializers.serialize("json", restaurants)
         return HttpResponse(restaurant)
 
@@ -107,6 +107,29 @@ def searchRestaurant(request):
     if request.method=="POST":
         restaurants=[]
         for restaurant in Restaurant.objects.filter(name__startswith=request.POST.get("value")):
+            restaurant.url=restaurant.cover_image.image.url
             restaurants.append(restaurant)
         restaurant =serializers.serialize("json", restaurants)
         return HttpResponse(restaurant)
+
+@csrf_exempt
+def getFood(request):
+    if request.method=="POST":
+        food = [Food.objects.get(pk=request.POST.get("value"))]
+        foods = serializers.serialize("json", food)
+        split=foods.split('{')
+        data='image_url: '+str(food[0].cover_image.image.url)+','
+        split[2]=data+split[2]
+        foods='{'.join(split)
+        return HttpResponse(foods)
+
+@csrf_exempt
+def getRestaurant(request):
+    if request.method=="POST":
+        restaurant = [Restaurant.objects.get(pk=request.POST.get("value"))]
+        restaurants = serializers.serialize("json", restaurant)
+        split=restaurants.split('{')
+        data='image_url: '+str(restaurant[0].cover_image.image.url)+','
+        split[2]=data+split[2]
+        foods='{'.join(split)
+        return HttpResponse(restaurants)
