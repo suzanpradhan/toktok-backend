@@ -43,7 +43,7 @@
                                             <th>Food Item</th>
                                             <th>SKU*</th>
                                             <th>Menu Category</th>
-                                            <th>Price</th>
+                                            <th>Price(In Cents)</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -55,28 +55,18 @@
                                             <td>{{ food_item.MenuCollection.name }}</td>
                                             <td>{{ food_item.amountInCents }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>
+                                                <a href="{% url 'store_manager_food_update_new_item' id=food_item.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href="{% url 'store_manager_food_delete_item' id=food_item.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
-                                        <tr>
-                                            <td>{{ food_item.name }}</td>
-                                            <td>{{ food_item.sku }}</td>
-                                            <td>{{ food_item.MenuCollection.name }}</td>
-                                            <td>{{ food_item.amountInCents }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>Food Item</th>
                                             <th>SKU*</th>
                                             <th>Menu Category</th>
-                                            <th>Price</th>
+                                            <th>Price(In Cents)</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>

@@ -36,5 +36,13 @@
 {% block scripts %}
 
 {% endblock scripts %}
+
+  <script>
+      $(function() {
+          console.log(location.pathname);
+        $('nav a').removeClass('active');
+        $('nav a[href^="' +location.pathname + '"]').addClass('active');
+      });
+  </script>
 </body>
 </html>

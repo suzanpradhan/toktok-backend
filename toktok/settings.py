@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'mathfilters',
     'toktok.apps.imagegallery',
     'toktok.apps.basicapp',
+    'toktok.apps.customer',
+    'toktok.apps.orders',
     'toktok.apps.restaurant',
     'toktok.apps.storemanagerapp',
     'django.contrib.admin',

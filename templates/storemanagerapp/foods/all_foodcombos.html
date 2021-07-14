@@ -1,0 +1,85 @@
+{% extends 'storemanagerapp/index.html' %} {% load static %} {% block content %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>All FoodCombos</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <a href="{% url 'store_manager_food_add_new_foodcombo' %}"><button type="button" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>&nbspAdd New Item</button></a>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        {% comment %}
+                        <div class="card-header">
+                            <h3 class="card-title">All Items</h3>
+                        </div> {% endcomment %}
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">All FoodCombos</h3>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>FoodCombo</th>
+                                            <th>Price(In Cents)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for foodCombo in foodCombos %}
+                                        <tr>
+                                            <td>{{ foodCombo.name }}</td>
+                                            <td>{{ foodCombo.amountInCents }}</td>
+                                            <td>
+                                                <a href="{% url 'store_manager_update_foodcombo' id=foodCombo.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href="{% url 'store_manager_delete_foodcombo' id=foodCombo.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>FoodCombo</th>
+                                            <th>Price(In Cents)</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+
+
+
+
+{% endblock content %}

@@ -38,10 +38,10 @@
                     <div class="form-group">
                         <label>Add Items</label>
                         <div class="select2-purple">
-                            <select class="select2" name="food_items" id="add_food_items_select2" multiple="multiple" data-placeholder="Select Variations" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                            {% if food_variations %}
-                            {% for food_variation in food_variations %}
-                                <option>{{ food_variation.name }}</option>
+                            <select class="select2" name="food_items" id="add_food_items_select2" multiple="multiple" data-placeholder="Select Food Items" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                            {% if food_items %}
+                            {% for food_item in food_items %}
+                                <option>{{ food_item.name }}</option>
                             {% endfor %}
                             {% endif %}
                             </select>

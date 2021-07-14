@@ -41,18 +41,16 @@
                                     <thead>
                                         <tr>
                                             <th>Menu</th>
-                                            <th>Items</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for food_items_of_menu in food_items_of_menus %}
+                                        {% for food_menu in food_menus %}
                                         <tr>
-                                            <td>{{ food_items_of_menu.name }}</>
-                                            <td>{{ food_items_with_menu.name }}</td>
+                                            <td>{{ food_menu.name }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button>
-                                                <button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button>
+                                                <a href="{% url 'store_manager_menu_update_menu' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i>&nbspEdit</button></a>
+                                                <a href="{% url 'store_manager_menu_delete_menu' id=food_menu.id %}"><button type="button" class="btn btn-sm btn-danger"><i class="fas"></i>&nbspDelete</button></a>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -60,7 +58,6 @@
                                     <tfoot>
                                         <tr>
                                             <th>Menu</th>
-                                            <th>Items</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
