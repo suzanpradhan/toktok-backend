@@ -556,6 +556,8 @@ class GeneralSettings(LoginRequiredMixin, IsStoreManagerMixin,TemplateView):
         store_manager_detail = None
         try:
             store_manager_detail = store_manager_app_models.StoreManagerBasicDetail.objects.get(manager=request.user)
+            print(store_manager_detail)
+            print(store_manager_detail.name)
         except Exception as e:
             store_manager_detail = None
         context = {
