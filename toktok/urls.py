@@ -19,5 +19,8 @@ from django.conf.urls.static import static, settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('storemanager/', include("toktok.apps.storemanagerapp.urls"))
+    path('storemanager/', include("toktok.apps.storemanagerapp.urls")),
+    path('user/',include('toktok.apps.customer.urls')),
+    path('',include('toktok.apps.restaurant.urls')),
+    path('',include('toktok.apps.orders.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
