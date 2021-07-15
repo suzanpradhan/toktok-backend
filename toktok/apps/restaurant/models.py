@@ -22,7 +22,7 @@ class SubType(models.Model):
 class Addons(models.Model):
     name = models.CharField(max_length=255)
     amountInCents = models.FloatField()
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
 
 class FoodSubType(models.Model):
@@ -37,7 +37,7 @@ class Food(models.Model):
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
     amountInCents = models.FloatField(null=True)
     MenuCollection = models.ForeignKey(MenuCollection, on_delete=models.CASCADE, null=True)
-    subtypes = models.ManyToManyField(FoodSubType)
+    subtypes = models.ManyToManyField(FoodSubType, blank=True, null=True)
     addons = models.ManyToManyField(Addons)
 
 class FoodCombo(models.Model):

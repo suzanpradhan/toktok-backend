@@ -1,3 +1,5 @@
+from json.decoder import JSONDecoder
+from json.encoder import JSONEncoder
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # from .models import FoodCombo
@@ -5,10 +7,11 @@ from toktok.apps.restaurant.models import Food, MenuCollection, Restaurant
 from toktok.apps.imagegallery.models import Image
 import pandas as pd
 from toktok.apps.storemanagerapp.models import StoreManagerBasicDetail
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from .searializers import FoodSerializer
 
 class AddUpdateFoodCombo(TemplateView):
     def post(self, request, id,*args,**kwargs):
@@ -78,9 +81,11 @@ class excelImport(TemplateView):
 def getAllFood(request):
     if request.method=="GET":
         foods=[]
+        test = []
         for food in Food.objects.all():
             foods.append(food)
-        food =serializers.serialize("json", foods)
+        # food =serializers.serialize("json", foods)
+        responseData = FoodSerializer
         return HttpResponse(food)
 
 def getAllRestaurant(request):

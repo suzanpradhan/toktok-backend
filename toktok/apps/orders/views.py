@@ -155,6 +155,6 @@ def getOrder(request):
                 'status':order.status}
         return HttpResponse(json.dumps(data))
 
-@csrf_exempt
-def changeStatus(request):
-    if request.method=="GET":
+# @csrf_exempt
+# def changeStatus(request):
+#     if request.method=="GET":

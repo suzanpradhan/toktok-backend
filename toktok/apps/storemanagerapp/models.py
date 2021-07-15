@@ -12,7 +12,7 @@ class StoreManagerBasicDetail(models.Model):
     cover_image = models.ImageField(null=True, blank=True)
     favicon = models.ImageField(null=True, blank=True)
     location = models.ForeignKey(basicapp_models.Location, on_delete=models.CASCADE, null=True)
-    token=models.CharField(null=True, max_length=500)
+    token=models.CharField(null=True, max_length=500, blank=True)
 
 
 class StoreManagerUser(AbstractUser):
