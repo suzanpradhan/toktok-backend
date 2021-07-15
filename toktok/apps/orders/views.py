@@ -157,4 +157,14 @@ def getOrder(request):
 
 @csrf_exempt
 def changeStatus(request):
-    if request.method=="GET":
+    type={
+        '1':"Ordered",
+        '2':"Picked Up",
+        '3':"Delivering",
+        '4':"Delivered",
+    }
+    if request.method=="POST":
+        order=Order.objects.get(id=request.POST.get('id'))
+        order.status=request.POST.get('statusid')
+
+        return HttpResponse(json.dumps({'status':'Status successfully updated to '+type[str(order.status)], 'data':{'newStatus':str(order.status)}}))

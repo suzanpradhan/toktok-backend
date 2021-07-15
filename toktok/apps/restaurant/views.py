@@ -78,58 +78,152 @@ class excelImport(TemplateView):
 def getAllFood(request):
     if request.method=="GET":
         foods=[]
-        for food in Food.objects.all():
-            foods.append(food)
-        food =serializers.serialize("json", foods)
-        return HttpResponse(food)
+        allFood=Food.objects.all()
+        subtypes=[]
+        addons=[]
+        for food in allFood:
+            for type in food.subtypes.all():
+                subtype={'name':type.subtype.name,'manager':type.subtype.manager.id,'amount':type.amountInCents}
+                subtypes.append(subtype)
+            for add in food.addons.all():
+                addon={'name':add.name,'amount':add.amountInCents,'description':add.description,'manager':add.manager.id}
+                addons.append(addon)
+            if food.cover_image:
+                imageUrl=food.cover_image.image.url
+            else:
+                imageUrl=None
+            data={
+                'name':food.name,
+                'sku':food.sku,
+                'description':food.description,
+                'imageURL':imageUrl,
+                'manager':food.manager.id,
+                'amountInCents':food.amountInCents,
+                'menuCollection':{'name':food.MenuCollection.name,'manager':food.MenuCollection.manager.id},
+                'subTypes':subtypes,
+                'addons':addons
+            }
+            foods.append(data)
+        return HttpResponse(json.dumps(foods))
 
 def getAllRestaurant(request):
     if request.method=="GET":
         restaurants=[]
         for restaurant in Restaurant.objects.all():
-            restaurants.append(restaurant)
-        restaurant =serializers.serialize("json", restaurants)
-        return HttpResponse(restaurant)
+            if restaurant.cover_image:
+                imageUrl=restaurant.cover_image.image.url
+            else:
+                imageUrl=None
+            data={
+                'name':restaurant.name,
+                'description':restaurant.description,
+                'imageURL':imageUrl,
+                'address':restaurant.location.name,
+                'lat':restaurant.location.latitude,
+                'long':restaurant.location.longitude,
+                'manager':restaurant.manager.id
+            }
+            restaurants.append(data)
+
+        return HttpResponse(json.dumps(restaurants))
 
 @csrf_exempt
 def searchFood(request):
     if request.method=="POST":
-        
         foods=[]
+        subtypes=[]
+        addons=[]
         for food in Food.objects.filter(name__startswith=request.POST.get("value")):
-            foods.append(food)
-
-        food =serializers.serialize("json", foods)
-        return HttpResponse(food)
-
+            for type in food.subtypes.all():
+                subtype={'name':type.subtype.name,'manager':type.subtype.manager.id,'amount':type.amountInCents}
+                subtypes.append(subtype)
+            for add in food.addons.all():
+                addon={'name':add.name,'amount':add.amountInCents,'description':add.description,'manager':add.manager.id}
+                addons.append(addon)
+            if food.cover_image:
+                imageUrl=food.cover_image.image.url
+            else:
+                imageUrl=None
+            data={
+                'name':food.name,
+                'sku':food.sku,
+                'description':food.description,
+                'imageURL':imageUrl,
+                'manager':food.manager.id,
+                'amountInCents':food.amountInCents,
+                'menuCollection':{'name':food.MenuCollection.name,'manager':food.MenuCollection.manager.id},
+                'subTypes':subtypes,
+                'addons':addons
+            }
+            foods.append(data)
+        return HttpResponse(json.dumps(foods))
 @csrf_exempt
 def searchRestaurant(request):
     if request.method=="POST":
         restaurants=[]
-        for restaurant in Restaurant.objects.filter(name__startswith=request.POST.get("value")):
-            restaurant.url=restaurant.cover_image.image.url
-            restaurants.append(restaurant)
-        restaurant =serializers.serialize("json", restaurants)
-        return HttpResponse(restaurant)
+        for restaurant in  Restaurant.objects.filter(name__startswith=request.POST.get("value")):
+            if restaurant.cover_image:
+                imageUrl=restaurant.cover_image.image.url
+            else:
+                imageUrl=None
+            data={
+                'name':restaurant.name,
+                'description':restaurant.description,
+                'imageURL':imageUrl,
+                'address':restaurant.location.name,
+                'lat':restaurant.location.latitude,
+                'long':restaurant.location.longitude,
+                'manager':restaurant.manager.id
+            }
+            restaurants.append(data)
+
+        return HttpResponse(json.dumps(restaurants))
 
 @csrf_exempt
 def getFood(request):
     if request.method=="POST":
-        food = [Food.objects.get(pk=request.POST.get("value"))]
-        foods = serializers.serialize("json", food)
-        split=foods.split('{')
-        data='image_url: '+str(food[0].cover_image.image.url)+','
-        split[2]=data+split[2]
-        foods='{'.join(split)
-        return HttpResponse(foods)
+        subtypes=[]
+        addons=[]
+        food = Food.objects.get(pk=request.POST.get("value"))
+        for type in food.subtypes.all():
+            subtype={'name':type.subtype.name,'manager':type.subtype.manager.id,'amount':type.amountInCents}
+            subtypes.append(subtype)
+        for add in food.addons.all():
+            addon={'name':add.name,'amount':add.amountInCents,'description':add.description,'manager':add.manager.id}
+            addons.append(addon)
+        if food.cover_image:
+            imageUrl=food.cover_image.image.url
+        else:
+            imageUrl=None
+        data={
+                'name':food.name,
+                'sku':food.sku,
+                'description':food.description,
+                'imageURL':imageUrl,
+                'manager':food.manager.id,
+                'amountInCents':food.amountInCents,
+                'menuCollection':{'name':food.MenuCollection.name,'manager':food.MenuCollection.manager.id},
+                'subTypes':subtypes,
+                'addons':addons
+            }
+        return HttpResponse(json.dumps([data]))
+        
 
 @csrf_exempt
 def getRestaurant(request):
     if request.method=="POST":
-        restaurant = [Restaurant.objects.get(pk=request.POST.get("value"))]
-        restaurants = serializers.serialize("json", restaurant)
-        split=restaurants.split('{')
-        data='image_url: '+str(restaurant[0].cover_image.image.url)+','
-        split[2]=data+split[2]
-        foods='{'.join(split)
-        return HttpResponse(restaurants)
+        restaurant = Restaurant.objects.get(pk=request.POST.get("value"))
+        if restaurant.cover_image:
+                imageUrl=restaurant.cover_image.image.url
+        else:
+                imageUrl=None
+        data={
+                'name':restaurant.name,
+                'description':restaurant.description,
+                'imageURL':imageUrl,
+                'address':restaurant.location.name,
+                'lat':restaurant.location.latitude,
+                'long':restaurant.location.longitude,
+                'manager':restaurant.manager.id
+            }
+        return HttpResponse(json.dumps([data]))
