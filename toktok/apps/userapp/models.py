@@ -15,7 +15,7 @@ class StoreManagerBasicDetail(models.Model):
     token=models.CharField(null=True, max_length=500, blank=True)
 
 
-class StoreManagerUser(AbstractUser):
+class User(AbstractUser):
     username = None
     email = models.EmailField(('email address'), unique=True)
 

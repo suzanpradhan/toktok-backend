@@ -13,7 +13,12 @@ class Restaurant(models.Model):
 
 class MenuCollection(models.Model):
     name = models.CharField(max_length=255)
+    icon = models.ForeignKey(image_gallery_model.Image, on_delete=models.CASCADE, blank=True, null=True)
     manager = models.ForeignKey(store_manager_app_models.StoreManagerBasicDetail, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name
+    
         
 class SubType(models.Model):
     name = models.CharField(max_length=255)
@@ -38,7 +43,11 @@ class Food(models.Model):
     amountInCents = models.FloatField(null=True)
     MenuCollection = models.ForeignKey(MenuCollection, on_delete=models.CASCADE, null=True)
     subtypes = models.ManyToManyField(FoodSubType, blank=True, null=True)
-    addons = models.ManyToManyField(Addons)
+    addons = models.ManyToManyField(Addons, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
 
 class FoodCombo(models.Model):
     name = models.CharField(max_length=255)

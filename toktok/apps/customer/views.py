@@ -2,6 +2,8 @@ from django.shortcuts import render
 from toktok.apps.storemanagerapp.models import StoreManagerUser
 from datetime import datetime, timedelta, timezone
 from .models import User
+from rest_framework.exceptions import ValidationError
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -36,22 +38,26 @@ def userLogin(request):
     if request.method=="POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        payload_data = {
-            "email": email,
-            "password": password,
-            "expired": to_integer(
-        datetime.now(timezone.utc) + timedelta(hours=1))
-        }
-        
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            payload_data = {
+                "email": email,
+                "password": password,
+                "expired": to_integer(
+            datetime.now(timezone.utc) + timedelta(hours=1))
+            }
+            token = jwt.encode(
+                payload=payload_data, key=my_secret,algorithm='HS256')
+            request.user.token = token
+            return HttpResponse(json.dumps({'status':'success','email': email,'token': token}))
+        else:
+            return HttpResponse(json.dumps({'status':'failed'}))
         # if token=request.POST.get('token'):
         #     payload=jwt.decode(token,key=my_secret)
         #     if get_int_from_datetime(datetime.now(timezone.utc))<payload[exp]:
 
-        token = jwt.encode(
-                payload=payload_data, key=my_secret,algorithm='HS256')
-        request.user.token = token
-        return HttpResponse(json.dumps({'email': email,'token': token}))
-
+        
 @csrf_exempt
 def verifyToken(request):
     if request.method=="POST":
